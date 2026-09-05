@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { GraduationCap, Rocket, Target, Wrench } from 'lucide-react'
-import heroPlaceholder from '../../assets/hero.png'
+import myPic from '../../assets/myPic.jpg'
+import { siteConfig } from '../../data/site'
 import { fadeIn, staggerContainer } from '../../utils/animations'
 import Container from '../Container/Container'
 import Section from '../Section/Section'
@@ -40,15 +41,31 @@ function About() {
         />
         <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <motion.div variants={fadeIn} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-            <div className="relative mx-auto aspect-square max-w-sm rounded-[2rem] border border-white/10 bg-card/60 p-8 shadow-premium backdrop-blur-xl">
-              <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-primary/25 via-transparent to-secondary/25" />
-              <div className="relative grid h-full place-items-center rounded-[1.5rem] border border-white/10 bg-background/70">
+            <div className="relative mx-auto max-w-sm">
+              <div
+                className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-primary/30 via-transparent to-secondary/30 blur-2xl"
+                aria-hidden="true"
+              />
+              <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-card/60 shadow-premium backdrop-blur-xl">
                 <img
-                  src={heroPlaceholder}
-                  alt="Developer workspace illustration placeholder"
+                  src={myPic}
+                  alt={`${siteConfig.name}, ${siteConfig.role}`}
                   loading="lazy"
-                  className="h-56 w-56 object-contain opacity-70"
+                  className="aspect-square w-full object-cover object-top"
                 />
+                <div
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-transparent"
+                  aria-hidden="true"
+                />
+                <div className="absolute inset-x-4 bottom-4 flex items-center gap-3 rounded-xl border border-white/10 bg-background/70 px-4 py-3 shadow-lg shadow-black/20 backdrop-blur-xl">
+                  <div className="grid size-9 shrink-0 place-items-center rounded-lg bg-primary/15 text-primary">
+                    <Rocket className="size-4" aria-hidden="true" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="truncate font-heading text-sm font-bold text-white">{siteConfig.name}</p>
+                    <p className="truncate text-xs text-muted">{siteConfig.role}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>

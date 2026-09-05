@@ -1,6 +1,6 @@
 :root {
   color: #ffffff;
-  background: #050816;
+  background: #041b12;
   color-scheme: dark;
   font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
   font-synthesis: none;
@@ -24,9 +24,9 @@ body {
   margin: 0;
   overflow-x: hidden;
   background:
-    radial-gradient(circle at top left, rgba(59, 130, 246, 0.12), transparent 34rem),
-    radial-gradient(circle at top right, rgba(139, 92, 246, 0.1), transparent 30rem),
-    #050816;
+    radial-gradient(circle at top left, rgba(16, 185, 129, 0.12), transparent 34rem),
+    radial-gradient(circle at top right, rgba(45, 212, 191, 0.1), transparent 30rem),
+    #041b12;
 }
 
 button,
@@ -45,7 +45,7 @@ button {
 
 ::selection {
   color: #ffffff;
-  background: rgba(59, 130, 246, 0.55);
+  background: rgba(16, 185, 129, 0.55);
 }
 
 .premium-button-ripple::before {

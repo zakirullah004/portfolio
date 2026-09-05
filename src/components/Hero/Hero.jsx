@@ -2,7 +2,6 @@ import { motion, useReducedMotion, useSpring, useTransform } from 'framer-motion
 import { Code2, Download, Mail, Network, Sparkles } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import heroPlaceholder from '../../assets/hero.png'
 import myPic from '../../assets/myPic.jpg'
 import myResume from '../../assets/zakirResume.pdf'
 import { fadeIn, staggerContainer } from '../../utils/animations'
@@ -84,21 +83,6 @@ function Hero() {
   const badgeX = useTransform(mouseX, [-1, 1], [10, -10])
   const badgeY = useTransform(mouseY, [-1, 1], [8, -8])
 
-  const badgeAnimation = useMemo(
-    () =>
-      prefersReducedMotion
-        ? {}
-        : {
-            y: [-6, 8, -6],
-            transition: {
-              duration: 4.5,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            },
-          },
-    [prefersReducedMotion],
-  )
-
   function handleMouseMove(event) {
     if (prefersReducedMotion) return
 
@@ -139,12 +123,12 @@ function Hero() {
         transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
         style={{
           backgroundImage:
-            'linear-gradient(115deg, rgba(59, 130, 246, 0.22), transparent 28%, rgba(139, 92, 246, 0.18), transparent 62%, rgba(45, 212, 191, 0.12))',
+            'linear-gradient(115deg, rgba(16, 185, 129, 0.22), transparent 28%, rgba(45, 212, 191, 0.18), transparent 62%, rgba(163, 230, 53, 0.12))',
           backgroundSize: '220% 220%',
         }}
       />
       <div
-        className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_28%,rgba(59,130,246,0.24),transparent_26rem),radial-gradient(circle_at_78%_34%,rgba(139,92,246,0.22),transparent_25rem),radial-gradient(circle_at_52%_88%,rgba(14,165,233,0.12),transparent_24rem)] blur-2xl"
+        className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_28%,rgba(16,185,129,0.24),transparent_26rem),radial-gradient(circle_at_78%_34%,rgba(45,212,191,0.2),transparent_25rem),radial-gradient(circle_at_52%_88%,rgba(163,230,53,0.1),transparent_24rem)] blur-2xl"
         aria-hidden="true"
       />
       <div
@@ -289,20 +273,50 @@ function Hero() {
             </div>
           </motion.div>
 
-          <motion.div style={{ x: badgeX, y: badgeY }} className="absolute inset-0">
-            {techBadges.map((badge, index) => (
-              <motion.span
-                key={badge.label}
-                className={`absolute rounded-full border border-white/10 bg-card/80 px-3 py-1.5 text-xs font-bold text-white shadow-lg shadow-black/20 backdrop-blur-xl sm:px-4 sm:text-sm ${badge.className}`}
-                animate={badgeAnimation}
-                transition={{
-                  ...badgeAnimation.transition,
-                  delay: index * 0.18,
-                }}
-              >
-                {badge.label}
-              </motion.span>
-            ))}
+          <motion.div style={{ x: badgeX, y: badgeY }} className="absolute inset-0 pointer-events-none">
+            <style>{`
+              :root {
+                --orbit-radius: 9rem;
+              }
+              @media (min-width: 640px) {
+                :root {
+                  --orbit-radius: 12.5rem;
+                }
+              }
+              @media (min-width: 1024px) {
+                :root {
+                  --orbit-radius: 14.5rem;
+                }
+              }
+            `}</style>
+            
+            <motion.div
+              className="absolute inset-0"
+              animate={prefersReducedMotion ? {} : { rotate: 360 }}
+              transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
+            >
+              {techBadges.map((badge, index) => {
+                const angle = index * (360 / techBadges.length)
+                return (
+                  <div
+                    key={badge.label}
+                    className="absolute left-1/2 top-1/2"
+                    style={{
+                      transform: `translate(-50%, -50%) rotate(${angle}deg) translateY(calc(-1 * var(--orbit-radius)))`,
+                    }}
+                  >
+                    <motion.span
+                      className="pointer-events-auto block rounded-full border border-white/10 bg-card/80 px-3 py-1.5 text-xs font-bold text-white shadow-lg shadow-black/20 backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-primary/50 hover:bg-primary/10 hover:shadow-primary/20 sm:px-4 sm:text-sm whitespace-nowrap cursor-default"
+                      initial={{ rotate: -angle }}
+                      animate={prefersReducedMotion ? {} : { rotate: [-angle, -angle - 360] }}
+                      transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
+                    >
+                      {badge.label}
+                    </motion.span>
+                  </div>
+                )
+              })}
+            </motion.div>
           </motion.div>
         </motion.div>
       </Container>

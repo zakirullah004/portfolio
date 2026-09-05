@@ -141,7 +141,7 @@ function ProjectDetailPage() {
                 <Button as="a" href={project.liveDemo} target="_blank" rel="noreferrer" icon={ExternalLink}>
                   Open Live Demo
                 </Button>
-                <Button as="a" href={project.github} target="_blank" rel="noreferrer" variant="secondary" icon={Github}>
+                <Button as="a" href={project.github} target="_blank" rel="noreferrer" variant="secondary" icon={GitBranch}>
                   View Source
                 </Button>
               </div>
