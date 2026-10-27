@@ -2,11 +2,11 @@ export const siteConfig = {
   name: 'Zakir Ullah',
   role: 'MERN Stack Developer',
   url: 'https://zakirofficial-portfolio.vercel.app',
-  email: 'hello@example.com',
+  email: 'zk743087@gmail.com',
   location: 'Pakistan',
   availability: 'Open to new opportunities',
   github: 'https://github.com/zakirullah004',
-  linkedin: 'https://linkedin.com',
+  linkedin: 'https://pk.linkedin.com/in/zakir-ullah-a3b7952b8',
   resume: '/resume.pdf',
   description:
     'MERN Stack Developer building modern, responsive, scalable, and high-performance web applications.',
