@@ -9,10 +9,11 @@ import {
   Lightbulb,
   TriangleAlert,
 } from 'lucide-react'
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import Button from '../../components/Button/Button'
 import Container from '../../components/Container/Container'
 import Seo from '../../components/Seo/Seo'
+import NotFoundPage from '../NotFoundPage/NotFoundPage'
 import { getAdjacentProjects, getProjectBySlug } from '../../data/projects'
 
 function DetailBlock({ label, icon: Icon, children }) {
@@ -32,7 +33,7 @@ function ProjectDetailPage() {
   const project = getProjectBySlug(slug)
 
   if (!project) {
-    return <Navigate to="/" replace />
+    return <NotFoundPage />
   }
 
   const { previousProject, nextProject } = getAdjacentProjects(slug)

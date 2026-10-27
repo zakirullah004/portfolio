@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://example.com/</loc>
-    <priority>1.0</priority>
+    <loc>https://zakirofficial-portfolio.vercel.app/</loc>
   </url>
   <url>
-    <loc>https://example.com/project/mern-taskflow-dashboard</loc>
-    <priority>0.8</priority>
+    <loc>https://zakirofficial-portfolio.vercel.app/project/seo-rank-tracker</loc>
   </url>
   <url>
-    <loc>https://example.com/project/developer-portfolio-platform</loc>
-    <priority>0.8</priority>
+    <loc>https://zakirofficial-portfolio.vercel.app/project/ai-powerded-dental-system</loc>
   </url>
   <url>
-    <loc>https://example.com/project/api-commerce-backend</loc>
-    <priority>0.8</priority>
+    <loc>https://zakirofficial-portfolio.vercel.app/project/real-estate-web</loc>
   </url>
 </urlset>

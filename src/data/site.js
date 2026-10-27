@@ -1,6 +1,7 @@
 export const siteConfig = {
   name: 'Zakir Ullah',
   role: 'MERN Stack Developer',
+  url: 'https://zakirofficial-portfolio.vercel.app',
   email: 'hello@example.com',
   location: 'Pakistan',
   availability: 'Open to new opportunities',
