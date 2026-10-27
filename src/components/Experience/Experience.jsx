@@ -1,9 +1,9 @@
-import { BriefcaseBusiness, Sparkles } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { BriefcaseBusiness } from 'lucide-react'
+import { fadeUp, staggerContainer, viewportOnce } from '../../utils/animations'
 import Container from '../Container/Container'
 import Section from '../Section/Section'
 import SectionHeading from '../SectionHeading/SectionHeading'
-import { motion } from 'framer-motion'
-import { fadeIn } from '../../utils/animations'
 
 const experiences = [
   {
@@ -27,39 +27,48 @@ function Experience() {
     <Section id="experience">
       <Container>
         <SectionHeading
+          index="04"
           eyebrow="Experience"
-          title="Practical growth through building"
+          title={
+            <>
+              Practical growth through <em className="italic">building</em>
+            </>
+          }
           description="My current experience is centered on project work, internship readiness, and disciplined full stack practice."
         />
-        <div className="mx-auto grid max-w-4xl gap-5">
+
+        <motion.ol
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          className="border-t border-line"
+        >
           {experiences.map(({ role, company, period, details }) => (
-            <motion.article
+            <motion.li
               key={role}
-              variants={fadeIn}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.35 }}
-              className="group rounded-xl border border-white/10 bg-card/55 p-6 shadow-lg shadow-black/10 backdrop-blur-xl transition hover:-translate-y-1 hover:border-secondary/40"
+              variants={fadeUp}
+              className="group grid gap-5 border-b border-line py-8 sm:py-10 lg:grid-cols-[11rem_minmax(0,1fr)_auto] lg:gap-10"
             >
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                <div className="flex gap-4">
-                  <span className="grid size-12 shrink-0 place-items-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white">
-                    <BriefcaseBusiness className="size-5" aria-hidden="true" />
-                  </span>
-                  <div>
-                    <h3 className="font-heading text-xl font-bold text-white">{role}</h3>
-                    <p className="mt-1 text-sm font-semibold text-muted">{company}</p>
-                  </div>
-                </div>
-                <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 px-3 py-1 text-xs font-semibold text-secondary">
-                  <Sparkles className="size-3.5" aria-hidden="true" />
-                  {period}
-                </span>
+              <p className="meta text-ash-dim">{period}</p>
+
+              <div>
+                <h3 className="display-md text-bone transition-colors duration-300 group-hover:text-jade">
+                  {role}
+                </h3>
+                <p className="mt-2 font-mono text-[0.625rem] uppercase tracking-[0.16em] text-jade/80">
+                  {company}
+                </p>
+                <p className="mt-4 max-w-2xl text-sm leading-7 text-ash">{details}</p>
               </div>
-              <p className="mt-5 text-sm leading-7 text-muted">{details}</p>
-            </motion.article>
+
+              <BriefcaseBusiness
+                className="hidden size-4 text-ash-dim transition-colors duration-300 group-hover:text-jade lg:block"
+                aria-hidden="true"
+              />
+            </motion.li>
           ))}
-        </div>
+        </motion.ol>
       </Container>
     </Section>
   )

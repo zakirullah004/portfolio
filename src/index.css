@@ -2,13 +2,27 @@
 @import './styles/theme.css';
 
 @theme {
-  --color-background: #041b12;
-  --color-primary: #10b981;
-  --color-secondary: #2dd4bf;
-  --color-card: #0d2419;
-  --color-text: #ffffff;
-  --color-muted: #84a79c;
-  --font-heading: 'Poppins', ui-sans-serif, system-ui, sans-serif;
-  --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --shadow-premium: 0 24px 80px rgba(0, 0, 0, 0.35);
+  /* Surfaces */
+  --color-ink: #07080a;
+  --color-ink-soft: #0b0d10;
+  --color-panel: #101316;
+
+  /* Type */
+  --color-bone: #f2ede2;
+  --color-bone-dim: #d9d3c6;
+  --color-ash: #8f958f;
+  --color-ash-dim: #7b817c;
+
+  /* Accent */
+  --color-jade: #8fe3bd;
+  --color-jade-dim: #3f6f5b;
+
+  /* Hairlines */
+  --color-line: rgba(242, 237, 226, 0.1);
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Instrument Serif', 'Times New Roman', serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --shadow-premium: 0 40px 120px -48px rgba(0, 0, 0, 0.9);
 }

@@ -1,67 +1,69 @@
 import { motion } from 'framer-motion'
-import { Braces, Code2, Database, GitBranch, Palette, Server, Wrench } from 'lucide-react'
-import { fadeIn, staggerContainer } from '../../utils/animations'
+import { skillGroups, skillIcons } from '../../data/skills'
+import { fadeUp, staggerContainer, viewportOnce } from '../../utils/animations'
 import Container from '../Container/Container'
 import Section from '../Section/Section'
 import SectionHeading from '../SectionHeading/SectionHeading'
-
-const skillGroups = [
-  { category: 'Frontend', icon: Code2, skills: ['HTML', 'CSS', 'JavaScript', 'React', 'Next.js', 'Tailwind CSS'] },
-  { category: 'Backend', icon: Server, skills: ['Node.js', 'Express.js'] },
-  { category: 'Database', icon: Database, skills: ['MongoDB'] },
-  { category: 'Tools', icon: Wrench, skills: ['Git', 'GitHub', 'VS Code', 'Postman', 'Figma'] },
-]
-
-const skillIcons = {
-  JavaScript: Braces,
-  Git: GitBranch,
-  Figma: Palette,
-}
 
 function Skills() {
   return (
     <Section id="skills">
       <Container>
         <SectionHeading
+          index="02"
           eyebrow="Skills"
-          title="A focused modern stack"
+          title={
+            <>
+              A focused <em className="italic">modern stack</em>
+            </>
+          }
           description="Tools and technologies I use to design, build, debug, and deliver polished web applications."
         />
+
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-          className="grid gap-5 lg:grid-cols-4"
+          viewport={viewportOnce}
+          className="grid gap-px border border-line bg-line md:grid-cols-2 xl:grid-cols-4"
         >
-          {skillGroups.map(({ category, icon: GroupIcon, skills }) => (
+          {skillGroups.map(({ category, icon: GroupIcon, skills }, groupIndex) => (
             <motion.article
               key={category}
-              variants={fadeIn}
-              className="rounded-xl border border-white/10 bg-card/55 p-5 shadow-lg shadow-black/10 backdrop-blur-xl"
+              variants={fadeUp}
+              className="group/cell bg-ink p-6 transition-colors duration-500 hover:bg-ink-soft sm:p-8"
             >
-              <div className="mb-5 flex items-center gap-3">
-                <span className="grid size-11 place-items-center rounded-lg bg-secondary/10 text-secondary">
-                  <GroupIcon className="size-5" aria-hidden="true" />
-                </span>
-                <h3 className="font-heading text-xl font-bold text-white">{category}</h3>
+              <div className="flex items-center justify-between">
+                <span className="meta text-ash-dim">{String(groupIndex + 1).padStart(2, '0')}</span>
+                <GroupIcon className="size-4 text-jade/60" aria-hidden="true" />
               </div>
-              <div className="grid gap-3">
-                {skills.map((skill, index) => {
+
+              <h3 className="display-md mt-8 text-bone">{category}</h3>
+
+              <ul className="mt-6">
+                {skills.map((skill) => {
                   const Icon = skillIcons[skill] || GroupIcon
+
                   return (
-                    <motion.div
+                    <li
                       key={skill}
-                      className="group flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3 transition hover:-translate-y-1 hover:border-primary/50 hover:bg-primary/10 hover:shadow-lg hover:shadow-primary/10"
-                      animate={{ y: [-2, 3, -2] }}
-                      transition={{ duration: 4 + index * 0.2, repeat: Infinity, ease: 'easeInOut' }}
+                      className="group flex items-center gap-3 border-t border-line py-3 transition-colors duration-300"
                     >
-                      <Icon className="size-4 text-primary transition group-hover:scale-110" aria-hidden="true" />
-                      <span className="text-sm font-semibold text-white">{skill}</span>
-                    </motion.div>
+                      <Icon
+                        className="size-3 shrink-0 text-ash-dim transition-colors duration-300 group-hover:text-jade"
+                        aria-hidden="true"
+                      />
+                      <span className="text-sm text-bone-dim transition-colors duration-300 group-hover:text-bone">
+                        {skill}
+                      </span>
+                      <span
+                        className="ml-auto h-px w-0 bg-jade/50 transition-all duration-500 group-hover:w-5"
+                        aria-hidden="true"
+                      />
+                    </li>
                   )
                 })}
-              </div>
+              </ul>
             </motion.article>
           ))}
         </motion.div>

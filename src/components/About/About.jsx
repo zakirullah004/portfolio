@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion'
 import { GraduationCap, Rocket, Target, Wrench } from 'lucide-react'
-import myPic from '../../assets/myPic.jpg'
+import myPic from '../../assets/myPic-web.jpg'
 import { siteConfig } from '../../data/site'
-import { fadeIn, staggerContainer } from '../../utils/animations'
+import { fadeUp, imageReveal, staggerContainer, viewportOnce } from '../../utils/animations'
 import Container from '../Container/Container'
 import Section from '../Section/Section'
 import SectionHeading from '../SectionHeading/SectionHeading'
@@ -30,67 +30,109 @@ const aboutCards = [
   },
 ]
 
+const facts = [
+  { label: 'Based in', value: siteConfig.location },
+  { label: 'Now studying', value: 'BS Software Engineering' },
+  { label: 'Primary focus', value: 'MERN stack development' },
+]
+
 function About() {
   return (
     <Section id="about">
       <Container>
         <SectionHeading
-          eyebrow="About me"
-          title="Engineering thoughtful web experiences"
+          index="01"
+          eyebrow="About"
+          title={
+            <>
+              Engineering thoughtful <em className="italic">web experiences</em>
+            </>
+          }
           description="I combine software engineering fundamentals with a strong eye for UI detail, motion, and user experience."
         />
-        <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-          <motion.div variants={fadeIn} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-            <div className="relative mx-auto max-w-sm">
-              <div
-                className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-primary/30 via-transparent to-secondary/30 blur-2xl"
-                aria-hidden="true"
-              />
-              <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-card/60 shadow-premium backdrop-blur-xl">
-                <img
-                  src={myPic}
-                  alt={`${siteConfig.name}, ${siteConfig.role}`}
-                  loading="lazy"
-                  className="aspect-square w-full object-cover object-top"
-                />
-                <div
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-transparent"
-                  aria-hidden="true"
-                />
-                <div className="absolute inset-x-4 bottom-4 flex items-center gap-3 rounded-xl border border-white/10 bg-background/70 px-4 py-3 shadow-lg shadow-black/20 backdrop-blur-xl">
-                  <div className="grid size-9 shrink-0 place-items-center rounded-lg bg-primary/15 text-primary">
-                    <Rocket className="size-4" aria-hidden="true" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="truncate font-heading text-sm font-bold text-white">{siteConfig.name}</p>
-                    <p className="truncate text-xs text-muted">{siteConfig.role}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
 
+        <div className="grid gap-14 lg:grid-cols-[0.78fr_1.22fr] lg:gap-20">
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            className="grid gap-4 sm:grid-cols-2"
+            viewport={viewportOnce}
+            className="h-fit lg:sticky lg:top-28"
           >
-            {aboutCards.map(({ icon: Icon, title, text }) => (
-              <motion.article
-                key={title}
-                variants={fadeIn}
-                className="group rounded-xl border border-white/10 bg-card/55 p-5 shadow-lg shadow-black/10 backdrop-blur-xl transition hover:-translate-y-1 hover:border-primary/40 hover:shadow-primary/10"
-              >
-                <div className="mb-4 grid size-11 place-items-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white">
-                  <Icon className="size-5" aria-hidden="true" />
+            <motion.figure variants={imageReveal} className="relative">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[2px] border border-line bg-ink-soft">
+                <img
+                  src={myPic}
+                  alt={`${siteConfig.name}, ${siteConfig.role}`}
+                  loading="lazy"
+                  className="portrait-grade h-full w-full object-cover object-top"
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent"
+                  aria-hidden="true"
+                />
+                <figcaption className="absolute inset-x-0 bottom-0 flex items-baseline justify-between gap-4 p-5">
+                  <span className="meta text-bone/85">{siteConfig.name}</span>
+                  <span className="meta text-jade">{siteConfig.location}</span>
+                </figcaption>
+              </div>
+            </motion.figure>
+
+            <motion.dl variants={fadeUp} className="mt-8 grid gap-0 border-t border-line">
+              {facts.map((fact) => (
+                <div
+                  key={fact.label}
+                  className="flex items-baseline justify-between gap-6 border-b border-line py-3.5"
+                >
+                  <dt className="meta text-ash-dim">{fact.label}</dt>
+                  <dd className="text-right text-sm text-bone-dim">{fact.value}</dd>
                 </div>
-                <h3 className="font-heading text-lg font-bold text-white">{title}</h3>
-                <p className="mt-3 text-sm leading-7 text-muted">{text}</p>
-              </motion.article>
-            ))}
+              ))}
+            </motion.dl>
           </motion.div>
+
+          <div>
+            <motion.p
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportOnce}
+              className="display-md max-w-2xl text-balance text-bone-dim"
+            >
+              I&rsquo;m Zakir Ullah — a MERN stack developer and software engineering student who cares
+              about how an interface feels as much as how it works.
+            </motion.p>
+
+            <motion.ol
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportOnce}
+              className="mt-12 border-t border-line"
+            >
+              {aboutCards.map(({ icon: Icon, title, text }, index) => (
+                <motion.li
+                  key={title}
+                  variants={fadeUp}
+                  className="group grid gap-5 border-b border-line py-8 sm:grid-cols-[2.5rem_13rem_minmax(0,1fr)] sm:items-start sm:gap-8"
+                >
+                  <span className="meta text-ash-dim">{String(index + 1).padStart(2, '0')}</span>
+
+                  <div>
+                    <Icon
+                      className="size-4 text-jade transition-transform duration-500 group-hover:-translate-y-0.5"
+                      aria-hidden="true"
+                    />
+                    <h3 className="mt-3 font-display text-[1.75rem] leading-tight text-bone transition-colors duration-300 group-hover:text-jade">
+                      {title}
+                    </h3>
+                  </div>
+
+                  <p className="max-w-md text-sm leading-7 text-ash">{text}</p>
+                </motion.li>
+              ))}
+            </motion.ol>
+          </div>
         </div>
       </Container>
     </Section>

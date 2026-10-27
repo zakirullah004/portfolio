@@ -20,3 +20,5 @@ export const navigationLinks = [
     path: '/#contact',
   },
 ]
+
+export const sectionIds = navigationLinks.map((link) => link.path.split('#')[1])

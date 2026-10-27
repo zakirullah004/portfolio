@@ -1,5 +1,6 @@
-import { Mail, MapPin, Send, UserRound } from 'lucide-react'
+import { ArrowUpRight, Download, Send } from 'lucide-react'
 import { useState } from 'react'
+import myResume from '../../assets/zakirResume.pdf'
 import { siteConfig } from '../../data/site'
 import Button from '../Button/Button'
 import Container from '../Container/Container'
@@ -13,26 +14,33 @@ const initialForm = {
   message: '',
 }
 
-function ContactInput({ label, name, value, onChange, error, type = 'text', multiline = false }) {
+function ContactField({ label, name, value, onChange, error, type = 'text', multiline = false }) {
   const Component = multiline ? 'textarea' : 'input'
+  const fieldId = `contact-${name}`
+  const errorId = `${fieldId}-error`
 
   return (
-    <label className="group relative block">
+    <div className="flex flex-col gap-2">
+      <label htmlFor={fieldId} className="meta text-ash-dim">
+        {label}
+      </label>
       <Component
+        id={fieldId}
         name={name}
         type={multiline ? undefined : type}
         value={value}
         onChange={onChange}
-        placeholder=" "
-        rows={multiline ? 5 : undefined}
-        className="peer w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 pb-3 pt-6 text-sm text-white outline-none transition placeholder:text-transparent focus:border-primary focus:shadow-lg focus:shadow-primary/10"
+        rows={multiline ? 4 : undefined}
         aria-invalid={Boolean(error)}
+        aria-describedby={error ? errorId : undefined}
+        className="w-full resize-none border-b border-line bg-transparent py-3 text-sm text-bone outline-none transition-colors duration-300 focus:border-jade"
       />
-      <span className="pointer-events-none absolute left-4 top-2 text-xs font-semibold text-muted transition peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary">
-        {label}
-      </span>
-      {error ? <span className="mt-2 block text-xs font-semibold text-red-300">{error}</span> : null}
-    </label>
+      {error ? (
+        <p id={errorId} className="text-xs text-red-300">
+          {error}
+        </p>
+      ) : null}
+    </div>
   )
 }
 
@@ -53,7 +61,8 @@ function Contact() {
     if (!form.name.trim()) nextErrors.name = 'Please enter your name.'
     if (!/^\S+@\S+\.\S+$/.test(form.email)) nextErrors.email = 'Please enter a valid email.'
     if (!form.subject.trim()) nextErrors.subject = 'Please enter a subject.'
-    if (form.message.trim().length < 10) nextErrors.message = 'Message should be at least 10 characters.'
+    if (form.message.trim().length < 10)
+      nextErrors.message = 'Message should be at least 10 characters.'
 
     setErrors(nextErrors)
 
@@ -67,45 +76,109 @@ function Contact() {
     <Section id="contact">
       <Container>
         <SectionHeading
+          index="09"
           eyebrow="Contact"
-          title="Let’s build something useful"
+          title={
+            <>
+              Let&rsquo;s build <em className="italic">something useful</em>
+            </>
+          }
           description="Reach out for internships, collaboration, project feedback, or full stack development opportunities."
         />
-        <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-          <aside className="rounded-xl border border-white/10 bg-card/55 p-6 shadow-lg shadow-black/10 backdrop-blur-xl">
-            <h3 className="font-heading text-2xl font-bold text-white">Contact details</h3>
-            <div className="mt-6 grid gap-4">
-              <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-3 rounded-lg border border-white/10 p-4 text-muted transition hover:border-primary/40 hover:text-white">
-                <Mail className="size-5 text-primary" aria-hidden="true" />
-                {siteConfig.email}
-              </a>
-              <p className="flex items-center gap-3 rounded-lg border border-white/10 p-4 text-muted">
-                <MapPin className="size-5 text-secondary" aria-hidden="true" />
-                {siteConfig.location}
-              </p>
-              <a href={siteConfig.github} target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-lg border border-white/10 p-4 text-muted transition hover:border-primary/40 hover:text-white">
-                <UserRound className="size-5 text-primary" aria-hidden="true" />
-                GitHub profile
-              </a>
-            </div>
-          </aside>
-          <form onSubmit={handleSubmit} className="rounded-xl border border-white/10 bg-card/55 p-5 shadow-lg shadow-black/10 backdrop-blur-xl sm:p-6" noValidate>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <ContactInput label="Name" name="name" value={form.name} onChange={handleChange} error={errors.name} />
-              <ContactInput label="Email" name="email" type="email" value={form.email} onChange={handleChange} error={errors.email} />
-              <div className="sm:col-span-2">
-                <ContactInput label="Subject" name="subject" value={form.subject} onChange={handleChange} error={errors.subject} />
+
+        <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+          <div>
+            <p className="meta text-ash-dim">Direct email</p>
+            <a
+              href={`mailto:${siteConfig.email}`}
+              className="link-sweep mt-4 inline-block text-2xl text-bone transition-colors duration-300 hover:text-jade sm:text-3xl"
+            >
+              {siteConfig.email}
+            </a>
+
+            <dl className="mt-12 border-t border-line">
+              <div className="flex items-baseline justify-between gap-6 border-b border-line py-4">
+                <dt className="meta text-ash-dim">Location</dt>
+                <dd className="text-sm text-bone-dim">{siteConfig.location}</dd>
               </div>
-              <div className="sm:col-span-2">
-                <ContactInput label="Message" name="message" value={form.message} onChange={handleChange} error={errors.message} multiline />
+              <div className="flex items-baseline justify-between gap-6 border-b border-line py-4">
+                <dt className="meta text-ash-dim">Availability</dt>
+                <dd className="flex items-center gap-2 text-sm text-bone-dim">
+                  <span className="size-1.5 rounded-full bg-jade" aria-hidden="true" />
+                  {siteConfig.availability}
+                </dd>
               </div>
+              <div className="flex items-baseline justify-between gap-6 border-b border-line py-4">
+                <dt className="meta text-ash-dim">Résumé</dt>
+                <dd>
+                  <a
+                    href={myResume}
+                    download
+                    className="group inline-flex items-center gap-2 text-sm text-bone-dim transition-colors duration-300 hover:text-jade"
+                  >
+                    Download PDF
+                    <Download className="size-3.5" aria-hidden="true" />
+                  </a>
+                </dd>
+              </div>
+            </dl>
+
+            <a
+              href={siteConfig.github}
+              target="_blank"
+              rel="noreferrer"
+              className="link-sweep mt-8 inline-flex items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-ash transition-colors duration-300 hover:text-bone"
+            >
+              GitHub profile
+              <ArrowUpRight className="size-3.5" aria-hidden="true" />
+            </a>
+          </div>
+
+          <form onSubmit={handleSubmit} noValidate className="grid gap-7">
+            <div className="grid gap-7 sm:grid-cols-2">
+              <ContactField
+                label="Name"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                error={errors.name}
+              />
+              <ContactField
+                label="Email"
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={handleChange}
+                error={errors.email}
+              />
             </div>
-            {status ? <p className="mt-4 rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-sm text-white">{status}</p> : null}
-            <div className="mt-6">
+
+            <ContactField
+              label="Subject"
+              name="subject"
+              value={form.subject}
+              onChange={handleChange}
+              error={errors.subject}
+            />
+
+            <ContactField
+              label="Message"
+              name="message"
+              value={form.message}
+              onChange={handleChange}
+              error={errors.message}
+              multiline
+            />
+
+            <div>
               <Button type="submit" icon={Send}>
                 Send Message
               </Button>
             </div>
+
+            <p aria-live="polite" className="min-h-5 text-sm text-jade">
+              {status}
+            </p>
           </form>
         </div>
       </Container>

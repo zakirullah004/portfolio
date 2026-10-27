@@ -3,7 +3,8 @@ export const siteConfig = {
   role: 'MERN Stack Developer',
   email: 'hello@example.com',
   location: 'Pakistan',
-  github: 'https://github.com',
+  availability: 'Open to new opportunities',
+  github: 'https://github.com/zakirullah004',
   linkedin: 'https://linkedin.com',
   resume: '/resume.pdf',
   description:

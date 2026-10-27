@@ -13,16 +13,19 @@ const Achievements = lazy(() => import('../../components/Achievements/Achievemen
 const Contact = lazy(() => import('../../components/Contact/Contact'))
 
 function SectionFallback() {
-  return <div className="mx-auto h-40 max-w-7xl animate-pulse rounded-xl bg-card/30" aria-hidden="true" />
+  return (
+    <div className="mx-auto w-full max-w-[92rem] px-5 py-24 sm:px-8 lg:px-12" aria-hidden="true">
+      <div className="h-px w-full bg-line" />
+      <div className="mt-14 h-40 w-full animate-pulse bg-panel/40" />
+    </div>
+  )
 }
 
 function HomePage() {
   return (
     <>
       <Seo />
-      <div id="home">
-        <Hero />
-      </div>
+      <Hero />
       <Suspense fallback={<SectionFallback />}>
         <About />
         <Skills />
